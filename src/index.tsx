@@ -1,8 +1,9 @@
 import React from "react";
-import { App } from "./pages/home/App";
+import { App } from "./pages";
 import * as serviceWorker from "./serviceWorker";
 import { render } from "react-dom";
 
+import "./styles/reset";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { client } from "./graphql/apollo";
 

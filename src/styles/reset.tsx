@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalStyle = createGlobalStyle`
+export const Reset = createGlobalStyle`
 html {
   font-family: "Karla", sans-serif;
   -ms-text-size-adjust: 100%;
