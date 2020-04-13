@@ -1,21 +1,23 @@
 import React from "react";
 import logo from "../../logo.svg";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+// import { gql } from "apollo-boost";
 
 import "./App.css";
-import { Plant } from "generated/graphql";
+import { GetAllPlantsDocument, GetAllPlantsQuery } from "generated/graphql";
 
-const GET_ALL_PLANTS = gql`
-  query plants {
-    id
-    description
-    name
-  }
-`;
+// const GET_ALL_PLANTS = gql`
+//   query getAllPlants {
+//     plants {
+//       description
+//     }
+//   }
+// `;
 
 export const App = () => {
-  const { data, loading, error } = useQuery<Plant[], {}>(GET_ALL_PLANTS);
+  const { data, loading, error } = useQuery<GetAllPlantsQuery, {}>(
+    GetAllPlantsDocument
+  );
   if (loading) {
     return <>Loading...</>;
   }
@@ -29,7 +31,7 @@ export const App = () => {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        {console.log("data", data)}
+        {console.log("data", data?.plants)}
         <a
           className="App-link"
           href="https://reactjs.org"
