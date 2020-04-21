@@ -8,9 +8,7 @@ import { NotFound } from "./not-found";
 export const App = () => (
   <Router>
     <Switch>
-      <Route path="/admin">
-        <Admin />
-      </Route>
+      <Route path="/admin" render={Admin} />
       <Route exact path="/">
         <Home />
       </Route>

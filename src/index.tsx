@@ -3,12 +3,13 @@ import { App } from "./pages";
 import * as serviceWorker from "./serviceWorker";
 import { render } from "react-dom";
 
-import "./styles/reset";
+import { Reset } from "./styles/reset";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { client } from "./graphql/apollo";
 
 render(
   <ApolloProvider client={client}>
+    <Reset />
     <App />
   </ApolloProvider>,
   document.getElementById("root")
