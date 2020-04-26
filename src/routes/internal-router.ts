@@ -15,5 +15,5 @@ class AdminAppRoutes {
   home = () => "";
 }
 
-const caregiverAppRoutes = new AdminAppRoutes();
-export const caregiverAppRouter = prependUri("/admin")(caregiverAppRoutes);
+const adminAppRoutes = new AdminAppRoutes();
+export const adminAppRouter = prependUri("/admin")(adminAppRoutes);

@@ -2,7 +2,6 @@ import { createGlobalStyle } from "styled-components";
 
 export const Reset = createGlobalStyle`
 html {
-  font-family: "Karla", sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
@@ -13,12 +12,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 * {
-  font-family: "Karla", sans-serif;
   font-weight: normal;
   line-height: 1.5;
   padding: 0;
   margin: 0;
-  color: #1B1B1B;
 }
 p {
   line-height: 150%;

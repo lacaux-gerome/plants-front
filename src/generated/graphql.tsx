@@ -15,6 +15,25 @@ export type AuthResp = {
   user: User;
 };
 
+export enum CardinalPoint {
+  North = "NORTH",
+  South = "SOUTH",
+  East = "EAST",
+  West = "WEST",
+}
+
+export type Plant = {
+  __typename?: "Plant";
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  description: Scalars["String"];
+  sprayFrequency: Scalars["Int"];
+  cardinalPoint: Array<CardinalPoint>;
+  shortExposure: ShortExposure;
+  image?: Maybe<Scalars["String"]>;
+  soilTypes: Array<Soil>;
+};
+
 export type Query = {
   __typename?: "Query";
   signupUser: AuthResp;
@@ -31,6 +50,18 @@ export type QueryLoginUserArgs = {
   email: Scalars["String"];
   password: Scalars["String"];
 };
+
+export enum ShortExposure {
+  FullSun = "FULL_SUN",
+  HalfSun = "HALF_SUN",
+  NoSun = "NO_SUN",
+}
+
+export enum Soil {
+  Sandy = "SANDY",
+  Clay = "CLAY",
+  Silt = "SILT",
+}
 
 export type User = {
   __typename?: "User";
