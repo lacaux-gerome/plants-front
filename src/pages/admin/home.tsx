@@ -1,18 +1,25 @@
-import React, { useState } from "react";
-import { SidebarNavigation } from "./components/sidebar-navigation";
-import { AppBar, Toolbar, CssBaseline } from "@material-ui/core";
+import React, { useState, useContext } from "react";
+import { AppContext } from "typed-index";
+import { useHistory } from "react-router-dom";
+import { adminAppRouter } from "routes/internal-router";
 import clsx from "clsx";
+// Material UI named
+import { AppBar, Toolbar, CssBaseline } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+// Material UI default
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
+// Icons
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import { Copyright } from "./components/copyright";
+import { SidebarNavigation } from "./components/sidebar-navigation";
+import { localStorageWrapper } from "network/local-storage/local-storage-wrapper";
 
 const drawerWidth = 240;
 
@@ -91,9 +98,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 export const HomeAdmin = () => {
   const classes = useStyles();
+  const { setIsConnected } = useContext(AppContext);
+  const history = useHistory();
+  //states
   const [open, setOpen] = useState<boolean>(true);
+  //logic
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
+  const disconnectFromAdmin = () => {
+    // TODO add call to api to disconnect the user
+    localStorageWrapper.removeItem("isConnectedToAdmin");
+    setIsConnected(false);
+    history.push(adminAppRouter.login());
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -135,7 +152,7 @@ export const HomeAdmin = () => {
           </IconButton>
         </div>
         <Divider />
-        <SidebarNavigation />
+        <SidebarNavigation disconnectFromAdmin={disconnectFromAdmin} />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

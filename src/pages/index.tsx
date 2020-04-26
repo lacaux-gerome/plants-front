@@ -8,7 +8,7 @@ import { NotFound } from "./not-found";
 export const RootPage = () => (
   <Router>
     <Switch>
-      <Route path="/admin" render={Admin} />
+      <Route path="/admin" component={Admin} />
       <Route exact path="/">
         <Home />
       </Route>

@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent } from "react";
+import React, { useState, SyntheticEvent, useContext } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { QueryLoginUserArgs, Query } from "generated/graphql";
@@ -21,6 +21,8 @@ import {
 import { adminAppRouter } from "routes/internal-router";
 import { Copyright } from "./components/copyright";
 import { isInputError } from "network/errors-guards";
+import { localStorageWrapper } from "network/local-storage/local-storage-wrapper";
+import { AppContext } from "typed-index";
 
 const loginUserQuery = gql`
   query LoginUser($email: String!, $password: String!) {
@@ -60,6 +62,7 @@ type LoginAdminForm = Record<LoginFormAdminField, boolean>;
 
 export const LoginAdmin = () => {
   const history = useHistory();
+  const { setIsConnected } = useContext(AppContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formErrors, setFormErrors] = useState<LoginAdminForm>({
@@ -73,7 +76,8 @@ export const LoginAdmin = () => {
         return;
       }
       if (data.success) {
-        document.cookie = "signedin=true";
+        setIsConnected(true);
+        localStorageWrapper.setItem(true, "isConnectedToAdmin");
         history.push(adminAppRouter.home());
       }
     },
