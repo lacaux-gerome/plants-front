@@ -1,21 +1,6 @@
 import React from "react";
-import { App } from "./pages";
-import * as serviceWorker from "./serviceWorker";
 import { render } from "react-dom";
 
-import { Reset } from "./styles/reset";
-import { ApolloProvider } from "@apollo/react-hooks";
-import { client } from "./graphql/apollo";
+import { App } from "typed-index";
 
-render(
-  <ApolloProvider client={client}>
-    <Reset />
-    <App />
-  </ApolloProvider>,
-  document.getElementById("root")
-);
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+render(<App />, document.getElementById("root"));

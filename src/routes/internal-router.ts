@@ -13,7 +13,8 @@ const prependUri = (prefix: string) => <T>(routerClass: T): Router<T> => {
 // ADMIN
 class AdminAppRoutes {
   home = () => "";
+  login = () => "/login";
 }
 
-const caregiverAppRoutes = new AdminAppRoutes();
-export const caregiverAppRouter = prependUri("/admin")(caregiverAppRoutes);
+const adminAppRoutes = new AdminAppRoutes();
+export const adminAppRouter = prependUri("/admin")(adminAppRoutes);

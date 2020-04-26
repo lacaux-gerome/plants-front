@@ -1,14 +1,18 @@
 import React from "react";
-import { Switch, Route, RouteComponentProps } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import { LoginAdmin } from "./login";
 import { HomeAdmin } from "./home";
+import { PrivateRoute } from "routes/react-router-custom-route";
+import { adminAppRouter } from "routes/internal-router";
 
-export const Admin = (props: RouteComponentProps<{}>) => {
+export const Admin = () => {
   return (
     <Switch>
-      <Route path={`${props.match.path}/login`} render={LoginAdmin} />
-      <Route path={`${props.match.path}/home`} render={HomeAdmin} />
+      <PrivateRoute path={adminAppRouter.home()} exact>
+        <HomeAdmin />
+      </PrivateRoute>
+      <Route exact component={LoginAdmin} path={adminAppRouter.login()} />
     </Switch>
   );
 };
