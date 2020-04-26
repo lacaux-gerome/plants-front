@@ -8,7 +8,6 @@ export const PrivateRoute = ({
   ...rest
 }: PropsWithChildren<RouteProps>) => {
   const { isConnected } = useContext(AppContext);
-  console.log("isConnected", isConnected);
   return (
     <Route
       {...rest}

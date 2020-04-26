@@ -31,7 +31,6 @@ export const App = () => {
   const [isConnected, setIsConnected] = useState<boolean>(
     initialIsConnected || false
   );
-  console.log(isConnected);
   return (
     <ApolloProvider client={client}>
       <AppContext.Provider value={{ isConnected, setIsConnected }}>
