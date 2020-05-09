@@ -1,0 +1,22 @@
+on:
+  push:
+
+jobs:
+  tsc:
+    name: tsc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install node v14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: github-action-cache-yarn.lock-${{ hashFiles('yarn.lock') }}
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+      - name: tsc
+        run: yarn tsc
