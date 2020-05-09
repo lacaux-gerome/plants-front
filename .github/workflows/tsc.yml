@@ -20,4 +20,4 @@ jobs:
       - name: yarn install
         run: yarn install --frozen-lockfile
       - name: tsc
-        uses: yarn tsc
+        run: yarn tsc
