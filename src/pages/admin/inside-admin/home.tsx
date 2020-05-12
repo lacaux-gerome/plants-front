@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import clsx from "clsx";
 import Box from "@material-ui/core/Box";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -10,7 +11,7 @@ import { Copyright } from "../components/molecules/copyright";
 import { AppBarAdmin } from "../components/organism/appbar";
 import { TableToolbar } from "../components/table/table-toolbar";
 import { TableHeadAdmin, HeadCell } from "../components/table/table-head";
-import { TableBody, TableRow, TableCell } from "@material-ui/core";
+import { TableBody, TableRow, TableCell, Avatar } from "@material-ui/core";
 
 type HomeAdminProps = {
   isAppBarOpened: boolean;
@@ -30,6 +31,8 @@ const createData = (email: string, createdAt: number, role: string): Data => ({
 
 const rows = [
   createData("gerome.lacaux@hetic.net", new Date().getTime(), "ADMIN"),
+  createData("alison.sayarath@gmail.com", 1589222780922, "USER"),
+  createData("enzo@gmail.com", 1589222780921, "USER"),
 ];
 const headCells: HeadCell<Data>[] = [
   {
@@ -94,6 +97,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     table: {
       minWidth: 750,
+    },
+    avatarCell: {
+      display: "grid",
+      alignItems: "center",
+      gridTemplateColumns: "40px 250px",
+      gridColumnGap: theme.spacing(2),
     },
   })
 );
@@ -180,17 +189,17 @@ function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy)).map(
                 (row, index) => (
                   <TableRow hover onClick={() => {}} tabIndex={-1} key={index}>
-                    {Object.entries(row).map(([k, v]) => (
+                    {Object.entries(row).map(([k, v], index) => (
                       <TableCell
                         align="left"
                         component="th"
                         id={k}
+                        className={clsx(index === 0 && classes.avatarCell)}
                         scope="row"
                         padding="default"
                       >
-                        {/* <Avatar>{row.name[0]}</Avatar>
-            {row.name} */}
-                        {v.toString()}
+                        {index === 0 && <Avatar>{v[0]}</Avatar>}
+                        <span>{v.toString()}</span>
                       </TableCell>
                     ))}
                   </TableRow>
