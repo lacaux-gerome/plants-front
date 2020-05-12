@@ -1,0 +1,11 @@
+on:
+  push:
+
+jobs:
+  tsc:
+    name: tsc
+    runs-on: ubuntu-latest
+    steps:
+      - name: Codecov
+      uses: codecov/codecov-action@v1.0.7
+    
