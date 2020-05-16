@@ -10,10 +10,11 @@ import { adminAppRouter } from "routes/internal-router";
 export const Admin = () => {
   return (
     <Switch>
+      {/* Order matters do not change the order without being sure that made what you want */}
+      <Route exact component={LoginAdmin} path={adminAppRouter.login()} />
       <PrivateRoute path={adminAppRouter.home()}>
         <InsideAdmin />
       </PrivateRoute>
-      <Route exact component={LoginAdmin} path={adminAppRouter.login()} />
     </Switch>
   );
 };

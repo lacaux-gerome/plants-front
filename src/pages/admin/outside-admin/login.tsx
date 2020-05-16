@@ -1,7 +1,7 @@
 import React, { useState, SyntheticEvent, useContext } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { Query } from "generated/graphql";
+import { Query, QueryLoginAdminUserArgs } from "generated/graphql";
 import { useHistory } from "react-router-dom";
 import {
   Button,
@@ -69,10 +69,12 @@ export const LoginAdmin = () => {
     EMAIL_FIELD: false,
     PASSWORD_FIELD: false,
   });
-  const [loginUser] = useLazyQuery<Query>(loginAdminUserQuery, {
+  const [loginUser] = useLazyQuery<
+    Pick<Query, "loginAdminUser">,
+    QueryLoginAdminUserArgs
+  >(loginAdminUserQuery, {
     variables: { email, password },
     onCompleted: ({ loginAdminUser: data }) => {
-      console.log("data--", data);
       if (!data) {
         return;
       }

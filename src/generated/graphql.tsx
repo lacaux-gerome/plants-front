@@ -6,6 +6,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export type AuthResp = {
@@ -20,6 +21,13 @@ export enum CardinalPoint {
   East = 'EAST',
   West = 'WEST'
 }
+
+
+export type PaginatedUsers = {
+   __typename?: 'PaginatedUsers';
+  length: Scalars['Int'];
+  users: Array<User>;
+};
 
 export type Plant = {
    __typename?: 'Plant';
@@ -39,6 +47,7 @@ export type Query = {
   createPlant: Plant;
   deletePlant: Plant;
   updatePlant: Plant;
+  paginatedUsers: PaginatedUsers;
 };
 
 
@@ -73,6 +82,13 @@ export type QueryUpdatePlantArgs = {
   cardinalPoint?: Maybe<Array<CardinalPoint>>;
 };
 
+
+export type QueryPaginatedUsersArgs = {
+  role?: Maybe<UserRole>;
+  offset: Scalars['Int'];
+  limit: Scalars['Int'];
+};
+
 export enum ShortExposure {
   FullSun = 'FULL_SUN',
   HalfSun = 'HALF_SUN',
@@ -87,11 +103,18 @@ export enum Soil {
 
 export type User = {
    __typename?: 'User';
-  id: Scalars['ID'];
+  id: Scalars['String'];
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
+  role: UserRole;
+  createdAt: Scalars['DateTime'];
 };
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
 
 
       export interface IntrospectionResultData {

@@ -14,6 +14,8 @@ const prependUri = (prefix: string) => <T>(routerClass: T): Router<T> => {
 class AdminAppRoutes {
   home = () => "";
   login = () => "/login";
+  users = () => "/users";
+  newUser = () => "/users/new";
 }
 
 const adminAppRoutes = new AdminAppRoutes();

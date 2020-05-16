@@ -4,7 +4,7 @@ import { AppContext } from "typed-index";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 // Components and internal
-import { HomeAdmin } from "./home";
+import { UsersAdmin } from "./users";
 import { adminAppRouter } from "routes/internal-router";
 // Material UI named
 import { CssBaseline } from "@material-ui/core";
@@ -109,7 +109,11 @@ export const InsideAdmin = () => {
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
             <Route path={adminAppRouter.home()} exact>
-              <HomeAdmin
+              {/* TODO Home need to be created  */}
+              <div>Home</div>
+            </Route>
+            <Route path={adminAppRouter.users()} exact>
+              <UsersAdmin
                 isAppBarOpened={isAppBarOpened}
                 handleAppBarOpen={handleAppBarOpen}
               />

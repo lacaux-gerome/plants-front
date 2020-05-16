@@ -14,9 +14,7 @@ export interface HeadCell<T> {
 }
 
 interface TableHeadAdminProps<T> {
-  numSelected: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: any;
   orderBy: string;
   rowCount: number;

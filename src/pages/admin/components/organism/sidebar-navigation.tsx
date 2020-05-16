@@ -11,6 +11,7 @@ import {
 import { adminAppRouter } from "routes/internal-router";
 
 import PersonIcon from "@material-ui/icons/Person";
+import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 type SidebarItem = {
@@ -25,11 +26,19 @@ type SidebarItem = {
 const sidebarMap: SidebarItem[] = [
   {
     id: 1,
-    label: "Users",
+    label: "Home",
     route: adminAppRouter.home(),
     isActive: (route) => adminAppRouter.home() === route,
-    icon: <PersonIcon />,
+    icon: <HomeIcon />,
     onClick: (history) => history.push(adminAppRouter.home()),
+  },
+  {
+    id: 1,
+    label: "Users",
+    route: adminAppRouter.users(),
+    isActive: (route) => adminAppRouter.users() === route,
+    icon: <PersonIcon />,
+    onClick: (history) => history.push(adminAppRouter.users()),
   },
 ];
 
