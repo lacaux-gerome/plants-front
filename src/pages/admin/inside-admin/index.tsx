@@ -1,24 +1,23 @@
 import React, { useState, useContext } from "react";
+import { Switch, Route } from "react-router-dom";
 import { AppContext } from "typed-index";
 import { useHistory } from "react-router-dom";
-import { adminAppRouter } from "routes/internal-router";
 import clsx from "clsx";
+// Components and internal
+import { UsersAdmin } from "./users";
+import { adminAppRouter } from "routes/internal-router";
 // Material UI named
-import { AppBar, Toolbar, CssBaseline } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // Material UI default
 import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 // Icons
-import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import { Copyright } from "./components/copyright";
-import { SidebarNavigation } from "./components/sidebar-navigation";
+import { SidebarNavigation } from "../components/organism/sidebar-navigation";
 import { localStorageWrapper } from "network/local-storage/local-storage-wrapper";
 
 const drawerWidth = 240;
@@ -36,28 +35,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     padding: "0 8px",
     ...theme.mixins.toolbar,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButtonHidden: {
-    visibility: "hidden",
-  },
-  title: {
-    flexGrow: 1,
-    marginLeft: 36,
   },
   drawerPaper: {
     position: "relative",
@@ -89,22 +66,17 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
 }));
-export const HomeAdmin = () => {
+
+export const InsideAdmin = () => {
   const classes = useStyles();
   const { setIsConnected } = useContext(AppContext);
   const history = useHistory();
   //states
-  const [open, setOpen] = useState<boolean>(true);
+  const [isAppBarOpened, setIsAppBarOpened] = useState<boolean>(true);
   //logic
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  const handleAppBarOpen = () => setIsAppBarOpened(true);
+  const handleAppBarClose = () => setIsAppBarOpened(false);
   const disconnectFromAdmin = () => {
     // TODO add call to api to disconnect the user
     localStorageWrapper.removeItem("isConnectedToAdmin");
@@ -114,40 +86,18 @@ export const HomeAdmin = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={clsx(classes.title)}
-          >
-            Users
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(
+            classes.drawerPaper,
+            !isAppBarOpened && classes.drawerPaperClose
+          ),
         }}
-        open={open}
+        open={isAppBarOpened}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleAppBarClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -157,9 +107,18 @@ export const HomeAdmin = () => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+          <Switch>
+            <Route path={adminAppRouter.home()} exact>
+              {/* TODO Home need to be created  */}
+              <div>Home</div>
+            </Route>
+            <Route path={adminAppRouter.users()} exact>
+              <UsersAdmin
+                isAppBarOpened={isAppBarOpened}
+                handleAppBarOpen={handleAppBarOpen}
+              />
+            </Route>
+          </Switch>
         </Container>
       </main>
     </div>

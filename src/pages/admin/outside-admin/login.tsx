@@ -1,7 +1,7 @@
 import React, { useState, SyntheticEvent, useContext } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { QueryLoginUserArgs, Query } from "generated/graphql";
+import { Query, QueryLoginAdminUserArgs } from "generated/graphql";
 import { useHistory } from "react-router-dom";
 import {
   Button,
@@ -19,14 +19,14 @@ import {
 } from "@material-ui/core";
 
 import { adminAppRouter } from "routes/internal-router";
-import { Copyright } from "./components/copyright";
+import { Copyright } from "../components/molecules/copyright";
 import { isInputError } from "network/errors-guards";
 import { localStorageWrapper } from "network/local-storage/local-storage-wrapper";
 import { AppContext } from "typed-index";
 
-const loginUserQuery = gql`
-  query LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
+const loginAdminUserQuery = gql`
+  query LoginAdminUser($email: String!, $password: String!) {
+    loginAdminUser(email: $email, password: $password) {
       success
       user {
         id
@@ -69,9 +69,12 @@ export const LoginAdmin = () => {
     EMAIL_FIELD: false,
     PASSWORD_FIELD: false,
   });
-  const [loginUser] = useLazyQuery<Query>(loginUserQuery, {
-    variables: { email, password } as QueryLoginUserArgs,
-    onCompleted: ({ loginUser: data }) => {
+  const [loginUser] = useLazyQuery<
+    Pick<Query, "loginAdminUser">,
+    QueryLoginAdminUserArgs
+  >(loginAdminUserQuery, {
+    variables: { email, password },
+    onCompleted: ({ loginAdminUser: data }) => {
       if (!data) {
         return;
       }
@@ -82,7 +85,7 @@ export const LoginAdmin = () => {
       }
     },
     onError: ({ graphQLErrors }) => {
-      if (isInputError(graphQLErrors[0])) {
+      if (graphQLErrors[0] && isInputError(graphQLErrors[0])) {
         const errors = graphQLErrors[0].extensions?.extraInfo.reduce(
           (acc: LoginAdminForm, error: LoginFormAdminField) => {
             return { ...acc, [error]: true };
